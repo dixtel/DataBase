@@ -20,7 +20,7 @@ class User
       string getUser(); //for file
       string getUserLogin();
       string getUserPassword();
-      string getUserAge();
+      int getUserAge();
       string getUserText();
 };
 

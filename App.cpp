@@ -31,9 +31,14 @@ void App::createUser(string use) {
 	user = new User( use );
 }
 
-bool App::checkUser(string log, string pas) {
+bool App::checkUserLogin(string log, string pas) {
 	return file -> CHECK(log, pas);
 }
+
+bool App::checkUserRegister(string log) {
+	return file -> CHECK_LOGIN(log);
+}
+
 
 string App::getUser(string log, string pas) {
 	string result = file -> GET(log, pas);
@@ -48,7 +53,7 @@ string App::getUserPassword() {
 	return user -> getUserPassword();
 }
 
-string App::getUserAge() {
+int App::getUserAge() {
 	return user -> getUserAge();
 }
 

@@ -23,8 +23,9 @@ class File
       bool getError();
       bool DELETE( string log );
       bool CHECK( string log, string pas );
+      bool CHECK_LOGIN( string log );
       bool ADD( string result );
-      bool CHANGE( string lof, string res );
+      bool CHANGE( string log, string res );
       string GET( string log, string pas );
 };
 

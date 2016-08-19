@@ -19,7 +19,8 @@ class Output {
 		void confirmRegister();
 		void errorRegister();
 		void userNotFound();
-		void user( string log, string pas, string ag, string tex );
+		void userIsRegister();
+		void userMenu( string log, string pas, int ag, string tex );
 
 };
 

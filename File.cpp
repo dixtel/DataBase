@@ -67,10 +67,10 @@ string File::GET(string log, string pas) {
 
         while(getline(file, user)) {
 
-			string login;
-        	string password;
+			      string login;
+            string password;
 
-        	int counter=0;
+        	  int counter=0;
 
             while(user[counter] != ' ') {
                 login += user[counter];
@@ -86,8 +86,9 @@ string File::GET(string log, string pas) {
 
             if((login == log) && (password == pas)) {
             	file.close();
-                return user;
+              return user;
             }
+
         }
 
         file.close();
@@ -165,6 +166,33 @@ bool File::CHECK(string log, string pas) {
 	}
 	file.close();
 	return false;
+}
+
+bool File::CHECK_LOGIN( string log ) {
+    fstream file( data.c_str() );
+
+    if(file.good()) {
+      string user;
+
+      getline(file, user);
+
+      while(getline( file, user )) {
+        string login;
+
+          int counter=0;
+          while(user[counter] != ' ') {
+              login += user[counter];
+              counter++;
+          }
+
+          if(login == log) {
+            file.close();
+            return true;
+          }
+      }
+  }
+  file.close();
+  return false;
 }
 
 bool File::DELETE(string log) {

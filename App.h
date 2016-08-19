@@ -18,11 +18,12 @@ class App
     ~App();
     bool registerUser(string log, string pas, int ag, string tex);
     void createUser(string use);
-    bool checkUser(string log, string pas);
+    bool checkUserLogin(string log, string pas);
+    bool checkUserRegister(string log);
     string getUser(string log, string pas);
     string getUserLogin();
     string getUserPassword();
-    string getUserAge();
+    int getUserAge();
     string getUserText();
 };
 

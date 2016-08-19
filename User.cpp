@@ -50,7 +50,7 @@ User::User(string res)
 	}
 
 	istringstream convert(tmp_age);
-	convert >> age;
+	convert >> ag;
 
 	login = log;
 	password = pas;
@@ -81,11 +81,8 @@ string User::getUserPassword() {
 	return password;
 }
 
-string User::getUserAge() {
-	stringstream convert;
-	convert << age;
-
-	return convert.str();
+int User::getUserAge() {
+	return age;
 }
 
 string User::getUserText() {

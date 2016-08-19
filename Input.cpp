@@ -36,9 +36,6 @@ string Input::password() {
 
 	cin >> password;
 
-	cout << cin.good() << endl
-		 << cin.fail() << endl;
-
 	cin.clear();
 	cin.ignore(256, '\n');
 
@@ -60,9 +57,6 @@ string Input::text() {
 	string text;
 
 	getline(cin, text);
-
-	cin.clear();
-	cin.ignore(256, '\n');
 
 	return text;
 }

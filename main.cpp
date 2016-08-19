@@ -29,6 +29,13 @@ int main() {
 			output.login();
 			string login = input.login();
 
+			bool result = app.checkUserRegister(login);
+			if(result) {
+				output.userIsRegister();
+				pause();
+				continue;
+			}
+
 			output.password();
 			string password1 = input.password();
 
@@ -52,13 +59,14 @@ int main() {
 
 			if(choose != "yes") continue;
 
-			bool result = app.registerUser(login, password1, age, text);
-
-			if(!result) {
+			bool result2 = app.registerUser(login, password1, age, text);
+			if(!result2) {
 				output.errorRegister();
 				pause();
 				continue;
 			}
+
+			continue;
 		}
 
 		output.login();
@@ -67,7 +75,7 @@ int main() {
 		output.password();
 		string password = input.password();
 
-		bool result = app.checkUser(login, password);
+		bool result = app.checkUserLogin(login, password);
 
 		if(!result) {
 			output.userNotFound();
@@ -79,10 +87,10 @@ int main() {
 
 		app.createUser( user_result );
 
-		output.user( app.getUserLogin(),
-								 app.getUserPassword(),
-								 app.getUserAge(),
-								 app.getUserText() );
+		output.userMenu( app.getUserLogin(),
+					 app.getUserPassword(),
+					 app.getUserAge(),
+					 app.getUserText() );
 
 		pause();
 	}

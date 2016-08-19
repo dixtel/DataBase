@@ -51,10 +51,14 @@ void Output::userNotFound() {
 	cout << "User not found\n";
 }
 
-void Output::user( string log, string pas, string ag, string tex ) {
+void Output::userIsRegister() {
+	cout << "Login already exists\n";
+}
+
+void Output::userMenu( string log, string pas, int ag, string tex ) {
 	string login = log;
 	string password = pas;
-	string age = ag;
+	int age = ag;
 	string text = tex;
 
 	cout << "------------------------------" << endl
@@ -62,5 +66,9 @@ void Output::user( string log, string pas, string ag, string tex ) {
 		 << "Password:   " << password << endl
 		 << "Age:        " << age << endl
 		 << "Text:       " << text << endl
-		 << "------------------------------" << endl;
+		 << "------------------------------" << endl
+		 << "1. Edit password" << endl
+		 << "2. Edit age" << endl
+		 << "3. Edit text" << endl
+		 << "5. Exit" << endl;
 }
