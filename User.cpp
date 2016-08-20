@@ -2,11 +2,14 @@
 
 using namespace std;
 
-User::User(string log, string pas, int ag, string tex)
+User::User(string log, string pas, string ag, string tex)
 {
 	login = log;
 	password = pas;
-	age = ag;
+
+	istringstream convert(ag);
+	convert >> age;
+
 	text = tex;
 }
 
@@ -60,6 +63,17 @@ User::User(string res)
 
 User::~User() {
 	cout << "Object user is deleted\n";
+}
+
+void User::change(string where, string change) {
+	if(where == "password") {
+		password = change;
+	} else if(where == "age") {
+		istringstream convert(change);
+		convert >> age;
+	} else if(where == "text")  {
+		text = change;
+	}
 }
 
 string User::getUser() {

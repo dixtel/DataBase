@@ -11,9 +11,10 @@ class Input {
 			Input();
 			~Input();
 			int menu();
+			int userMenu();
 			string login();
 			string password();
-			int age();
+			string age();
 			string text();
 			string confirmRegister();
 };

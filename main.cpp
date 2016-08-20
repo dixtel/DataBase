@@ -49,7 +49,7 @@ int main() {
 			}
 
 			output.age();
-			int age = input.age();
+			string age = input.age();
 
 			output.text();
 			string text = input.text();
@@ -87,12 +87,35 @@ int main() {
 
 		app.createUser( user_result );
 
-		output.userMenu( app.getUserLogin(),
-					 app.getUserPassword(),
-					 app.getUserAge(),
-					 app.getUserText() );
+		while(true) {
+			output.userMenu( app.getUserLogin(),
+					 	 app.getUserPassword(),
+					 	 app.getUserAge(),
+					 	 app.getUserText() );
+			int choose2 = input.userMenu();
 
-		pause();
+			if(choose2 == 1) { 
+				output.password();
+				string password = input.password();
+
+				app.changeUser("password", password);
+			}
+			else if(choose2 == 2) {
+				output.age();
+				string age = input.age();
+
+				app.changeUser("age", age);
+			}
+			else if(choose2 == 3) {
+				output.text();
+				string text = input.text();
+
+				app.changeUser("text", text);
+			}
+			else if(choose2 == 4) break;
+
+		}
+		continue;
 	}
   	
   	pause();

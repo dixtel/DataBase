@@ -250,12 +250,13 @@ bool File::CHANGE(string log, string res) {
    			string login;
 
    			int counter=0;
-            while(line[counter] != ' ') {
-                login += line[counter];
-                counter++;
-            }
+        while(line[counter] != ' ') {
+            login += line[counter];
+            counter++;
+        }
 
-            if(login == log) tmpfile << res + "\n";
+        if(login == log) tmpfile << res + "\n";
+        else tmpfile << line + "\n";
    		}
 
    		remove( data.c_str() );

@@ -14,7 +14,7 @@ App::~App() {
 	user = NULL;
 }
 
-bool App::registerUser(string log, string pas, int ag, string tex) {
+bool App::registerUser(string log, string pas, string ag, string tex) {
 	if(user) delete user;
 	user = new User(log, pas, ag, tex);
 
@@ -29,6 +29,12 @@ bool App::registerUser(string log, string pas, int ag, string tex) {
 void App::createUser(string use) {
 	if(user) delete user;
 	user = new User( use );
+}
+
+void App::changeUser(string where, string change) {
+	user -> change(where, change);
+	bool result = file -> CHANGE(user -> getUserLogin(), user -> getUser());
+
 }
 
 bool App::checkUserLogin(string log, string pas) {

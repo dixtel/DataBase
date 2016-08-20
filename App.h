@@ -2,6 +2,7 @@
 #define _APP_H_
 
 #include <iostream>
+#include <sstream>
 #include "File.h"
 #include "User.h"
 
@@ -16,8 +17,9 @@ class App
     public:
     App(string dat, string tmp);
     ~App();
-    bool registerUser(string log, string pas, int ag, string tex);
+    bool registerUser(string log, string pas, string ag, string tex);
     void createUser(string use);
+    void changeUser(string where, string change);
     bool checkUserLogin(string log, string pas);
     bool checkUserRegister(string log);
     string getUser(string log, string pas);

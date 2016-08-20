@@ -20,6 +20,17 @@ int Input::menu() {
 	return choose;
 }
 
+int Input::userMenu() {
+	int choose; //1, 2, 3
+
+	cin >> choose;
+
+	cin.clear();
+	cin.ignore(256, '\n');
+
+	return choose;
+}
+
 string Input::login() {
 	string login;
 
@@ -42,8 +53,8 @@ string Input::password() {
 	return password;
 }
 
-int Input::age() {
-	int age;
+string Input::age() {
+	string age;
 
 	cin >> age;
 

@@ -70,5 +70,5 @@ void Output::userMenu( string log, string pas, int ag, string tex ) {
 		 << "1. Edit password" << endl
 		 << "2. Edit age" << endl
 		 << "3. Edit text" << endl
-		 << "5. Exit" << endl;
+		 << "4. Exit" << endl;
 }

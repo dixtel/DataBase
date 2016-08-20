@@ -14,9 +14,10 @@ class User
       int age;
       string text;
     public:
-      User( string log, string pas, int ag, string tex);
+      User( string log, string pas, string ag, string tex);
       User( string res );
       ~User();
+      void change(string where, string change);
       string getUser(); //for file
       string getUserLogin();
       string getUserPassword();
