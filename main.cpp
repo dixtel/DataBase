@@ -16,7 +16,6 @@ int main() {
 	string tmpdata("tmpdata.txt");
 
 	App app(data, tmpdata);
-
 	Output output;
 	Input input;
 
@@ -76,7 +75,6 @@ int main() {
 		string password = input.password();
 
 		bool result = app.checkUserLogin(login, password);
-
 		if(!result) {
 			output.userNotFound();
 			pause();
@@ -84,14 +82,14 @@ int main() {
 		}
 
 		string user_result = app.getUser(login, password);
-
 		app.createUser( user_result );
 
 		while(true) {
-			output.userMenu( app.getUserLogin(),
-					 	 app.getUserPassword(),
-					 	 app.getUserAge(),
-					 	 app.getUserText() );
+			output.userMenu(app.getUserLogin(),
+					 	 	app.getUserPassword(),
+					 	 	app.getUserAge(),
+					 		app.getUserText());
+			
 			int choose2 = input.userMenu();
 
 			if(choose2 == 1) { 

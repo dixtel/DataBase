@@ -2,8 +2,7 @@
 
 using namespace std;
 
-User::User(string log, string pas, string ag, string tex)
-{
+User::User(string log, string pas, string ag, string tex) {
 	login = log;
 	password = pas;
 
@@ -13,8 +12,7 @@ User::User(string log, string pas, string ag, string tex)
 	text = tex;
 }
 
-User::User(string res)
-{
+User::User(string res) {
 	string user = res;
 
 	string log;

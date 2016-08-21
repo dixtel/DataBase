@@ -7,16 +7,18 @@
 using namespace std;
 
 class Input {
+	private:
+		bool parse(string what, string how);
 	public:
-			Input();
-			~Input();
-			int menu();
-			int userMenu();
-			string login();
-			string password();
-			string age();
-			string text();
-			string confirmRegister();
+		Input();
+		~Input();
+		int menu();
+		int userMenu();
+		string login();
+		string password();
+		string age();
+		string text();
+		string confirmRegister();
 };
 
 #endif // _INPUT_H_

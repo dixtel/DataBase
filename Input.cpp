@@ -9,24 +9,37 @@ Input::~Input() {
 	cout << "Object Input is deleted\n";
 }
 
+bool Input::parse(string what, string how) {
+	for(int i = 0; i < what.length(); i++) {
+		for (int y = 0; y < how.length(); y++) {
+			if(what[i] == how[y]) return true;
+		}
+	}
+	return false;
+}
+
 int Input::menu() {
 	int choose; //1, 2, 3
 
-	cin >> choose;
+	do {
+		cin >> choose;
+		cin.clear();
+		cin.ignore(256, '\n');
 
-	cin.clear();
-	cin.ignore(256, '\n');
+	} while(!(choose > 0 && choose < 4));
 
 	return choose;
 }
 
 int Input::userMenu() {
-	int choose; //1, 2, 3
+	int choose; //1, 2, 3, 4
 
-	cin >> choose;
+	do {
+		cin >> choose;
+		cin.clear();
+		cin.ignore(256, '\n');
 
-	cin.clear();
-	cin.ignore(256, '\n');
+	} while(!(choose > 0 && choose < 5));
 
 	return choose;
 }
@@ -34,10 +47,11 @@ int Input::userMenu() {
 string Input::login() {
 	string login;
 
-	cin >> login;
-
-	cin.clear();
-	cin.ignore(256, '\n');
+	do {
+		cin >> login;
+		cin.clear();
+		cin.ignore(256, '\n');
+	} while (parse(login, "!@#$%^&*()_+-=[]{}'|?/>.<,:; "));
 
 	return login;
 }
@@ -45,10 +59,12 @@ string Input::login() {
 string Input::password() {
 	string password;
 
-	cin >> password;
+	do {
+		cin >> password;
+		cin.clear();
+		cin.ignore(256, '\n');
 
-	cin.clear();
-	cin.ignore(256, '\n');
+	} while (parse(password, "!@#$%^&*()_+-=[]{}'|?/>.<,:; "));
 
 	return password;
 }
@@ -56,7 +72,9 @@ string Input::password() {
 string Input::age() {
 	string age;
 
-	cin >> age;
+	do {
+		cin >> age;
+	} while (parse(age, "!@#$%^&*()_+-=[]{}'|?/>.<,:; qwertyuiopasdfghjklzxcvbnm"));
 
 	cin.clear();
 	cin.ignore(256, '\n');

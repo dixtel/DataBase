@@ -18,11 +18,11 @@ bool App::registerUser(string log, string pas, string ag, string tex) {
 	if(user) delete user;
 	user = new User(log, pas, ag, tex);
 
-	string result = user -> getUser();
+	string user_result = user -> getUser();
 
-	bool isgood = file -> ADD( result );
+	bool result = file -> ADD( user_result );
 
-	if(isgood) return true;
+	if(result) return true;
 	else return false;
 }
 
@@ -33,8 +33,7 @@ void App::createUser(string use) {
 
 void App::changeUser(string where, string change) {
 	user -> change(where, change);
-	bool result = file -> CHANGE(user -> getUserLogin(), user -> getUser());
-
+	file -> CHANGE(user -> getUserLogin(), user -> getUser());
 }
 
 bool App::checkUserLogin(string log, string pas) {
