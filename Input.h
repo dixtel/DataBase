@@ -2,6 +2,7 @@
 #define _INPUT_H_
 
 #include <iostream>
+#include <typeinfo>
 #include <string>
 
 using namespace std;

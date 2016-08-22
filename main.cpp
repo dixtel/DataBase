@@ -111,11 +111,10 @@ int main() {
 				app.changeUser("text", text);
 			}
 			else if(choose2 == 4) break;
-
 		}
 		continue;
 	}
-  	
+	
   	pause();
 	return 0;
 }

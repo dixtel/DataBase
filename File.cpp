@@ -213,7 +213,7 @@ bool File::DELETE(string log) {
 
    		if(result == 0) cout<<"the file name has been chnged\n";
    		else {
-   			cout<<"the file name has not chenged\n";
+        cout<<"the file name has not chenged\n";
    			file.close();
    			return false;
    		}

@@ -1,6 +1,5 @@
 #include "Input.h"
 
-
 Input::Input() {
 
 }
@@ -22,7 +21,9 @@ int Input::menu() {
 	int choose; //1, 2, 3
 
 	do {
-		cin >> choose;
+		do {
+			cin >> choose;
+		} while( typeid(choose).name() == "int");
 		cin.clear();
 		cin.ignore(256, '\n');
 
@@ -35,7 +36,9 @@ int Input::userMenu() {
 	int choose; //1, 2, 3, 4
 
 	do {
-		cin >> choose;
+		do {
+			cin >> choose;
+		} while( typeid(choose).name() == "int");
 		cin.clear();
 		cin.ignore(256, '\n');
 
