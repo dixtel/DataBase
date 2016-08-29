@@ -2,39 +2,22 @@
 
 using namespace std;
 
-File::File(string dat, string tmp) {
+File::File(string fileDirectoryRead, string fileDirectorySave) {
+    this -> fileDirectorySave = fileDirectorySave;
+    this -> fileDirectoryRead = fileDirectoryRead;
+
     error = false;
-    data = dat;
-    tmpdata = tmp;
 
-    fstream file( data.c_str() );
-    fstream tmpfile( tmpdata.c_str() );
+    ifstream fileRead( this -> fileDirectoryRead.c_str() );
+    ofstream fileSave( this -> fileDirectorySave.c_str() );
 
-    if(file.good() && tmpfile.good()) {
+    if(fileRead.good() && fileSave.good()) {
         string firstLine;
-        getline(file, firstLine);
+        getline(fileRead, firstLine);
 
-        string result;
-        int counter=0;
-        while(true) {
-
-            if(counter > firstLine.size()-1) {
-                type.push_back(result);
-                break;
-            }
-
-            if(firstLine[counter] == ',') {
-                type.push_back(result);
-                result = "";
-                counter++;
-            }
-
-            result += firstLine[counter];
-            counter++;
-        }
-    } else  {
-    	tmpfile.close();
-    	file.close();
+        SetInformation(firstLine);
+    } 
+    else {
     	error = true;
     }
 }
@@ -43,222 +26,221 @@ File::~File() {
     cout<<"Object file is daleted \n";
 }
 
-void File::displayInfo() {
-    for(int i=0; i<type.size(); i++) {
-        cout << type[i] << endl;
+vector <string> File::GetLoginAndPassword(string line) {
+    string login;
+    string password;
+
+    vector <string> userLoginAndPassword;
+
+    int counter = 0;
+
+    while(line[counter] != ' ') {
+        login += line[counter];
+        counter++;
+    }
+
+    counter++;
+
+    while(line[counter] != ' ') {
+        password += line[counter];
+        counter++;
+    }
+
+    userLoginAndPassword.push_back(login);
+    userLoginAndPassword.push_back(password);
+
+    return userLoginAndPassword;
+}
+
+void File::SetInformation(string firstLine) {
+    int counter = 0;
+    for (int i = 0; i < 4; i++) {
+        string result;
+
+        while(firstLine[counter] != ',') {
+            if(firstLine[counter] == '\0') break;
+            result += firstLine[counter];
+            counter++;
+        }
+
+        dataBaseInfo.push_back(result);
+        counter++;
+    }
+}
+
+void File::DisplayDataBaseInfo() {
+    for(int i = 0; i < dataBaseInfo.size(); i++) {
+        cout << dataBaseInfo[i] << endl;
     }
 }
 
 
-bool File::getError() {
+bool File::ErrorOpenFile() {
     return error;
 }
 
-string File::GET(string log, string pas) {
-   fstream file( data.c_str() );
+bool File::DeleteUser(string login, string password) {
+    ifstream fileRead( fileDirectoryRead.c_str() );
+    ofstream fileSave( fileDirectorySave.c_str() );
 
-    if(file.good()) {
-        string user;
+    if(fileRead.good() && fileSave.good()) {
+        string line;
 
-        getline(file, user);
+        getline(fileRead, line);
+        fileSave << line + "\n";
 
-        while(getline(file, user)) {
-			      string login;
-            string password;
+        while(getline(fileRead, line)) {
+            string user;
 
-        	  int counter = 0;
-            while(user[counter] != ' ') {
-                login += user[counter];
-                counter++;
-            }
+            vector<string> userdata = GetLoginAndPassword(line);
 
-            counter++;
-            while(user[counter] != ' ') {
-                password += user[counter];
-                counter++;
-            }
-
-            if((login == log) && (password == pas)) {
-            	file.close();
-              return user;
-            }
+            if(userdata[0] != login) fileSave << line + "\n";
         }
-        file.close();
-        return "false";
-    }
-    file.close();
-    return "false";
-}
 
-bool File::ADD( string user ) {
-    fstream file( data.c_str() );
-    ofstream tmpfile( tmpdata.c_str() );
+        int removeOperation = remove( fileDirectoryRead.c_str() );
+        int renameOperation = rename( fileDirectorySave.c_str(), fileDirectoryRead.c_str() );
 
-    if(file.good() && tmpfile.good()) {
-   		string line;
-
-   		getline(file, line);
-   		tmpfile << line + "\n";
-
-   		tmpfile << user + "\n";
-
-   		while(getline(file, line)) {
-   			tmpfile << line + "\n";
-   		}
-
-   		remove( data.c_str() );
-   		int result = rename( tmpdata.c_str(), data.c_str() );
-
-   		if(result == 0) cout<<"the file name has been chnged\n";
-   		else {
-   			cout<<"the file name has not chenged\n";
-   			tmpfile.close();
-   			file.close();
-   			return false;
-   		}
-
-   		tmpfile.close();
-   		file.close();
-   		return true;
-    }
-    return false;
-}
-
-bool File::CHECK(string log, string pas) {
-  fstream file( data.c_str() );
-
-  if(file.good()) {
-  	string user;
-
-  	getline(file, user);
-
-  	while(getline( file, user )) {
-  		string login;
-  		string password;
-
-			int counter = 0;
-      while(user[counter] != ' ') {
-          login += user[counter];
-          counter++;
-      }
-
-      counter++;
-      while(user[counter] != ' ') {
-          password += user[counter];
-          counter++;
-      }
-
-      if((login == log) && (password == pas)) {
-      	file.close();
-      	return true;
-      }
-
-  	}
-  }
-  file.close();
-  return false;
-}
-
-bool File::CHECK_LOGIN( string log ) {
-    fstream file( data.c_str() );
-
-    if(file.good()) {
-      string user;
-
-      getline(file, user);
-
-      while(getline( file, user )) {
-        string login;
-
-          int counter=0;
-          while(user[counter] != ' ') {
-              login += user[counter];
-              counter++;
-          }
-
-          if(login == log) {
-            file.close();
+        if( (removeOperation == 0) && (renameOperation == 0) ) {
+            cout<<"the file is removed and renamed\n";
             return true;
-          }
+        }
+        else {
+            cout<<"the file is not removed and renamed\n";
+            return false;
+        }
+    }
+    return false;
+}
+
+bool File::CheckLogin(string login) {
+    ifstream fileRead( fileDirectoryRead.c_str() );
+
+    if( fileRead.good() ) {
+        string line;
+
+        getline(fileRead, line);
+
+        while( getline(fileRead, line) )  {
+            vector <string> userData = GetLoginAndPassword(line);
+
+            if(userData[0] == login) {
+                return true;
+            }
+        }
+        return false;
+    }
+    return false;
+}
+
+
+bool File::CheckUserIsRegister(string login, string password) {
+    ifstream fileRead( fileDirectoryRead.c_str() );
+
+    if( fileRead.good() ) {
+        string line;
+
+        getline(fileRead, line);
+
+        while( getline(fileRead, line) )  {
+            vector <string> userData = GetLoginAndPassword(line);
+
+            if( (userData[0] == login) && (userData[1] == password) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+    return false;
+}
+
+bool File::AddUser( string user ) {
+    ifstream fileRead( fileDirectoryRead.c_str() );
+    ofstream fileSave( fileDirectorySave.c_str() );
+
+    if( fileRead.good() && fileSave.good() ) {
+      string line;
+
+      getline(fileRead, line);
+
+      fileSave << line + "\n";
+
+      fileSave << user + "\n";
+
+      while( getline(fileRead, line) ) {
+          fileSave << line + "\n";
       }
-  }
-  file.close();
-  return false;
-}
 
-bool File::DELETE(string log) {
-    fstream file( data.c_str() );
-    ofstream tmpfile(tmpdata.c_str() );
+      int removeOperation = remove( fileDirectoryRead.c_str() );
+      int renameOperation = rename( fileDirectorySave.c_str(), fileDirectoryRead.c_str() );
 
-    if(file.good() && tmpfile.good()) {
-   		string line;
-
-   		getline(file, line);
-   		tmpfile << line + "\n";
-
-   		while(getline(file, line)) {
-   			string login;
-
-   			int counter=0;
-        while(line[counter] != ' ') {
-            login += line[counter];
-            counter++;
-        }
-
-        if(login != log) tmpfile << line + "\n";
-   		}
-
-   		remove( data.c_str() );
-   		int result = rename( tmpdata.c_str(), data.c_str() );
-
-   		if(result == 0) cout<<"the file name has been chnged\n";
-   		else {
-        cout<<"the file name has not chenged\n";
-   			file.close();
-   			return false;
-   		}
-
-   		file.close();
-   		return true;
+      if( (removeOperation == 0) && (renameOperation == 0) ) {
+          cout<<"the file is removed and renamed\n";
+          return true;
+      }
+      else {
+          cout<<"the file is not removed and renamed\n";
+          return false;
+      }
     }
     return false;
 }
 
-bool File::CHANGE(string log, string res) {
-	  fstream file( data.c_str() );
-    ofstream tmpfile( tmpdata.c_str() );
+bool File::ChangeDataUser(string login, string changedUser) {
+    ifstream fileRead( fileDirectoryRead.c_str() );
+    ofstream fileSave( fileDirectorySave.c_str() );
 
-    if(file.good() && tmpfile.good()) {
-   		string line;
+    if( fileRead.good() && fileSave.good() ) {
+      string line;
 
-   		getline(file, line);
-   		tmpfile << line + "\n";
+      getline( fileRead, line) ;
 
-   		while(getline(file, line)) {
-   			string login;
+      fileSave << line + "\n";
 
-   			int counter = 0;
-        while(line[counter] != ' ') {
-            login += line[counter];
-            counter++;
+      while( getline(fileRead, line) ) {
+        vector <string> userData = GetLoginAndPassword(line);
+
+        if( (userData[0] == login) ) {
+            fileSave << changedUser + "\n";
+            continue;
         }
 
-        if(login == log) tmpfile << res + "\n";
-        else tmpfile << line + "\n";
-   		}
+        fileSave << line + "\n";
+      }
 
-   		remove( data.c_str() );
-   		int result = rename( tmpdata.c_str(), data.c_str() );
+      int removeOperation = remove( fileDirectoryRead.c_str() );
+      int renameOperation = rename( fileDirectorySave.c_str(), fileDirectoryRead.c_str() );
 
-   		if(result == 0) cout<<"the file name has been chnged\n";
-   		else {
-   			cout<<"the file name has not chenged\n";
-   			file.close();
-   			return false;
-   		}
+      if( (removeOperation == 0) && (renameOperation == 0) ) {
+          cout<<"the file is removed and renamed\n";
+          return true;
+      }
+      else {
+          cout<<"the file is not removed and renamed\n";
+          return false;
+      }
 
-   		file.close();
-   		return true;
+      return true;
     }
     return false;
+}
+
+
+string File::GetUser(string login, string password) {
+   ifstream fileRead( fileDirectoryRead.c_str() );
+
+    if( fileRead.good() ) {
+        string line;
+
+        getline(fileRead, line);
+
+        while( getline(fileRead, line) ) {
+            vector <string> userData = GetLoginAndPassword(line); 
+
+            if( (userData[0] == login) && (userData[1] == password) ) {
+                return line;
+            }
+        }
+        return "UserNoFound";
+    }
+    return "ErrorOpenFile";
 }

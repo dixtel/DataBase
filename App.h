@@ -2,29 +2,28 @@
 #define _APP_H_
 
 #include <iostream>
-#include "File.h"
+#include <vector>
 #include "User.h"
+#include "DataManager.h"
 
 class App
 {
 	private:
-        string data;
-        string tmpdata;
-        File *file = NULL;
-        User *user = NULL;
+        DataManager *dataManager = NULL;
+        User        *user = NULL;
     public:
-        App(string dat, string tmp);
+        App(string fileDirectoryRead, string fileDirectorySave);
         ~App();
-        bool registerUser(string log, string pas, string ag, string tex);
-        void createUser(string use);
-        void changeUser(string where, string change);
-        bool checkUserLogin(string log, string pas);
-        bool checkUserRegister(string log);
-        string getUser(string log, string pas);
-        string getUserLogin();
-        string getUserPassword();
-        int getUserAge();
-        string getUserText();
+        void LoginUser(string login, string password);
+        void LogoutUser();
+        void ChangeDataUser(string where, string change);
+        bool IsLogin();
+        bool ErrorOpenFile();
+        bool CreateUser(string login, string password, string age, string text);
+        bool DeleteUser();
+        bool CheckLogin(string login);
+        bool CheckUserIsRegister(string login, string password);
+        vector <string> GetUser();
 };
 
 #endif // _APP_H_

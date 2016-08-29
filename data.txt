@@ -1,5 +1,6 @@
 login,password,age,text
-dixtel2 marcin2 16 "hello world"
-1234567890 ryder 16 "hello world :D"
-marcin wit 1111 "hell  w owldf   "
-dixtel ryder 16 "hello :S"
+Marcin mojehaslo 16 "Lubie placki"
+Krystian haslo 19 "pracuje"
+dixtel ryder 16 "I like programming <3"
+User password 15 "ear"
+Ktos gg 12 "rror"

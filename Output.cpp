@@ -8,67 +8,68 @@ Output::~Output() {
 		cout << "Object Output is deleted\n";
 }
 
-void Output::menu() {
+void Output::Menu() {
 	cout << endl << "--MENU--" << endl
 	<< "1. Login" << endl
 	<< "2. Register" << endl
 	<< "3. Quit" << endl;
 }
 
-void Output::login() {
+void Output::ShowLoginText() {
 	cout << "Enter login: ";
 }
 
-void Output::password() {
+void Output::ShowPasswordText() {
 	cout << "Enter password: ";
 }
 
-void Output::confirmPassword() {
+void Output::ConfirmPassword() {
 	cout << "Enter agin password: ";
 }
 
-void Output::badPassword() {
+void Output::BadPassword() {
 	cout << "Bad Password\n";
 }
 
-void Output::age() {
-	cout << "Enter Age: ";
+void Output::ShowAgeText() {
+	cout << "Enter age: ";
 }
 
-void Output::text() {
+void Output::ShowText() {
 	cout << "Enter text: ";
 }
 
-void Output::confirmRegister() {
-	cout << "Confirm register, (yes/no): ";
+void Output::ConfirmOperation() {
+	cout << "Confirm operation, (yes/no): ";
 }
 
-void Output::errorRegister() {
+
+void Output::ErrorRegister() {
 	cout << "Error register\n";
 }
 
-void Output::userNotFound() {
+void Output::ErrorOpenFile() {
+	cout << "Error open file\n";
+}
+
+void Output::UserNotFound() {
 	cout << "User not found\n";
 }
 
-void Output::userIsRegister() {
+void Output::UserIsRegister() {
 	cout << "Login already exists\n";
 }
 
-void Output::userMenu( string log, string pas, int ag, string tex ) {
-	string login = log;
-	string password = pas;
-	int age = ag;
-	string text = tex;
-
+void Output::ShowUser( vector <string> user ) {
 	cout << "------------------------------" << endl
-		 << "Username:   " << login << endl
-		 << "Password:   " << password << endl
-		 << "Age:        " << age << endl
-		 << "Text:       " << text << endl
+		 << "Username:   " << user[0] << endl
+		 << "Password:   " << user[1] << endl
+		 << "Age:        " << user[2] << endl
+		 << "Text:       " << user[3] << endl
 		 << "------------------------------" << endl
-		 << "1. Edit password" << endl
-		 << "2. Edit age" << endl
-		 << "3. Edit text" << endl
-		 << "4. Exit" << endl;
+		 << "1. Edit password" 	<< endl
+		 << "2. Edit age" 		<< endl
+		 << "3. Edit text" 		<< endl
+		 << "4. Delete user" 	<< endl
+		 << "5. Exit" 			<< endl;
 }

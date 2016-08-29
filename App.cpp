@@ -1,67 +1,78 @@
 #include "App.h"
 
-App::App(string dat, string tmp) {
-	data = dat;
-	tmpdata = tmp;
-	file = new File(dat ,tmp);
+App::App(string fileDirectoryRead, string fileDirectorySave) {
+	dataManager = new DataManager(fileDirectoryRead, fileDirectorySave);
 }
 
 App::~App() {
-	delete file;
-	file = NULL;
+	if (dataManager) {
+		delete dataManager;
+	}
+	if(user) {
+		delete user;
+	}
 
-	if(user) delete user;
+	dataManager = NULL;
+	user = NULL;
+
+	cout << "Object App is deleted\n";
+}
+	
+void App::LoginUser(string login, string password) {
+	if(this -> user) {
+		delete this -> user;
+	}
+	vector <string> user = dataManager -> GetUser(login, password);
+	this -> user = new User(user[0], user[1], user[2], user[3]);
+}
+
+
+void App::LogoutUser() {;
+	if(user) {
+		delete user;
+	}
 	user = NULL;
 }
 
-bool App::registerUser(string log, string pas, string ag, string tex) {
-	if(user) delete user;
-	user = new User(log, pas, ag, tex);
-
-	string user_result = user -> getUser();
-
-	bool result = file -> ADD( user_result );
-
-	if(result) return true;
-	else return false;
+void App::ChangeDataUser(string where, string change) {
+	if(user) {
+		user -> ChangeDataUser(where, change);
+	}
+	vector <string> changedUser = GetUser();
+	dataManager -> ChangeDataUser( changedUser[0] , changedUser );
 }
 
-void App::createUser(string use) {
-	if(user) delete user;
-	user = new User( use );
+bool App::ErrorOpenFile() {
+	return dataManager -> ErrorOpenFile();
 }
 
-void App::changeUser(string where, string change) {
-	user -> change(where, change);
-	file -> CHANGE(user -> getUserLogin(), user -> getUser());
+bool App::IsLogin() {
+	if(user) {
+		return true;
+	}
+	return false;
 }
 
-bool App::checkUserLogin(string log, string pas) {
-	return file -> CHECK(log, pas);
+bool App::CreateUser(string login, string password, string age, string text) {
+	return dataManager -> CreateUser(login, password, age, text);
 }
 
-bool App::checkUserRegister(string log) {
-	return file -> CHECK_LOGIN(log);
+bool App::DeleteUser() {
+	vector <string> user = GetUser();
+	return dataManager -> DeleteUser(user[0], user[1]);
 }
 
-
-string App::getUser(string log, string pas) {
-	string result = file -> GET(log, pas);
-	return result;
+bool App::CheckLogin(string login) {
+	return dataManager -> CheckLogin(login);
 }
 
-string App::getUserLogin() {
-	return user -> getUserLogin();
+bool App::CheckUserIsRegister(string login, string password) {
+	return dataManager -> CheckUserIsRegister(login, password);
 }
 
-string App::getUserPassword() {
-	return user -> getUserPassword();
-}
-
-int App::getUserAge() {
-	return user -> getUserAge();
-}
-
-string App::getUserText() {
-	return user -> getUserText();
+vector <string> App::GetUser() {
+	if(user) {
+		return user -> GetUser();
+	}
+	// if not - non void
 }

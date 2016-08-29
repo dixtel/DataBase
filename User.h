@@ -2,7 +2,7 @@
 #define _USER_H_
 
 #include <iostream>
-#include <sstream>
+#include <vector>
 
 using namespace std;
 
@@ -11,18 +11,13 @@ class User
     private:
       string login;
       string password;
-      int age;
+      string age;
       string text;
     public:
-      User( string log, string pas, string ag, string tex);
-      User( string res );
+      User(string login, string password, string age, string text);
       ~User();
-      void change(string where, string change);
-      string getUser(); //for file
-      string getUserLogin();
-      string getUserPassword();
-      int getUserAge();
-      string getUserText();
+      void ChangeDataUser(string where, string change);
+      vector <string> GetUser();
 };
 
 #endif

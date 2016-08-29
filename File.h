@@ -11,22 +11,23 @@ using namespace std;
 class File
 {
     private:
-      vector <string> type; // log, pass, age, text
-      string data;
-      string tmpdata;
+      vector <string> dataBaseInfo; // login, password, age, text
+      vector <string> GetLoginAndPassword(string line);
+      string fileDirectoryRead;
+      string fileDirectorySave;
       bool error;
-
     public:
-      File(string dat, string tmp);
+      File(string fileDirectoryRead, string fileDirectorySave);
       ~File();
-      void displayInfo();
-      bool getError();
-      bool DELETE( string log );
-      bool CHECK( string log, string pas );
-      bool CHECK_LOGIN( string log );
-      bool ADD( string result );
-      bool CHANGE( string log, string res );
-      string GET( string log, string pas );
+      void SetInformation(string firstLine);
+      void DisplayDataBaseInfo();
+      bool ErrorOpenFile();
+      bool DeleteUser(string login, string password);
+      bool CheckLogin(string login);
+      bool CheckUserIsRegister(string login, string password);
+      bool AddUser(string user);
+      bool ChangeDataUser(string login, string changedUser);
+      string GetUser(string login, string password);
 };
 
 #endif // _FILE_H_

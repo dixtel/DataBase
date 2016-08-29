@@ -13,13 +13,13 @@ class Input {
 	public:
 		Input();
 		~Input();
-		int menu();
-		int userMenu();
-		string login();
-		string password();
-		string age();
-		string text();
-		string confirmRegister();
+		int Menu();
+		int UserMenu();
+		string EnterLogin();
+		string EnterPassword();
+		string EnterAge();
+		string EnterText();
+		string EnterConfirmOperation();
 };
 
 #endif // _INPUT_H_

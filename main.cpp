@@ -5,116 +5,143 @@
 
 using namespace std;
 
-void pause() {
+string fileDirectoryRead("data.txt");
+string fileDirectorySave("tmpdata.txt");
+
+App app(fileDirectoryRead, fileDirectorySave);
+Output output;
+Input input;
+
+void Pause();
+void Login();
+void UserMenu();
+void Register();
+
+int main() {
+	if( app.ErrorOpenFile() ) {
+		output.ErrorOpenFile();
+		Pause();
+		return 0;
+	}
+
+	while(true) {
+		output.Menu();
+		int choose = input.Menu();
+
+		if(choose == 1) {
+			Login();
+			if(app.IsLogin()) {
+				UserMenu();
+			}
+		}
+		else if(choose == 2) {
+			Register();
+		}
+		else if(choose == 3) break;
+	}
+	
+	return 0;
+}
+
+void Pause() {
 	cin.clear();
 	cout << "Press enter to continue...";
 	cin.ignore();
 }
 
-int main() {
-	string data("data.txt");
-	string tmpdata("tmpdata.txt");
+void Login() {
+	output.ShowLoginText();
+	string login = input.EnterLogin();
 
-	App app(data, tmpdata);
-	Output output;
-	Input input;
+	output.ShowPasswordText();
+	string password = input.EnterPassword();
 
-	while(true) {
-		output.menu();
-		int choose = input.menu();
-
-		if(choose == 3) break;
-		if(choose == 2) {
-			output.login();
-			string login = input.login();
-
-			bool result = app.checkUserRegister(login);
-			if(result) {
-				output.userIsRegister();
-				pause();
-				continue;
-			}
-
-			output.password();
-			string password1 = input.password();
-
-			output.confirmPassword();
-			string password2 = input.password();
-
-			if(password1 != password2) {
-				output.badPassword();
-				pause();
-				continue;
-			}
-
-			output.age();
-			string age = input.age();
-
-			output.text();
-			string text = input.text();
-
-			output.confirmRegister();
-			string choose = input.confirmRegister();
-
-			if(choose != "yes") continue;
-
-			bool result2 = app.registerUser(login, password1, age, text);
-			if(!result2) {
-				output.errorRegister();
-				pause();
-				continue;
-			}
-
-			continue;
-		}
-
-		output.login();
-		string login = input.login();
-
-		output.password();
-		string password = input.password();
-
-		bool result = app.checkUserLogin(login, password);
-		if(!result) {
-			output.userNotFound();
-			pause();
-			continue;
-		}
-
-		string user_result = app.getUser(login, password);
-		app.createUser( user_result );
-
-		while(true) {
-			output.userMenu(app.getUserLogin(),
-					 	 	app.getUserPassword(),
-					 	 	app.getUserAge(),
-					 		app.getUserText());
-			
-			int choose2 = input.userMenu();
-
-			if(choose2 == 1) { 
-				output.password();
-				string password = input.password();
-
-				app.changeUser("password", password);
-			}
-			else if(choose2 == 2) {
-				output.age();
-				string age = input.age();
-
-				app.changeUser("age", age);
-			}
-			else if(choose2 == 3) {
-				output.text();
-				string text = input.text();
-
-				app.changeUser("text", text);
-			}
-			else if(choose2 == 4) break;
-		}
-		continue;
+	if( !app.CheckUserIsRegister(login, password) ) {
+		output.UserNotFound();
+		Pause();
+		return;
 	}
-	
-  	pause();
-	return 0;
+
+	app.LoginUser(login, password);
 }
+
+void UserMenu() {
+	while(true) {
+		output.ShowUser( app.GetUser() );
+		
+		int choose = input.UserMenu();
+
+		if(choose == 1) { 
+			output.ShowPasswordText();
+			string password = input.EnterPassword();
+
+			app.ChangeDataUser("password", password);
+		}
+		else if(choose == 2) {
+			output.ShowAgeText();
+			string age = input.EnterAge();
+
+			app.ChangeDataUser("age", age);
+		}
+		else if(choose == 3) {
+			output.ShowText();
+			string text = input.EnterText();
+
+			app.ChangeDataUser("text", text);
+		}
+		else if(choose == 4) {
+			output.ConfirmOperation();
+			string choose = input.EnterConfirmOperation();
+
+			if(choose == "yes") {
+				app.DeleteUser();
+				app.LogoutUser();
+				break;
+			}
+		}
+		else if(choose == 5) {
+			app.LogoutUser();
+			break;
+		}
+	}
+}
+
+void Register() {
+	output.ShowLoginText();
+	string login = input.EnterLogin();
+
+	if( app.CheckLogin(login) ) {
+		output.UserIsRegister();
+		Pause();
+		return;
+	}
+
+	output.ShowPasswordText();
+	string password1 = input.EnterPassword();
+
+	output.ConfirmPassword();
+	string password2 = input.EnterPassword();
+
+	if(password1 != password2) {
+		output.BadPassword();
+		Pause();
+		return;
+	}
+
+	output.ShowAgeText();
+	string age = input.EnterAge();
+
+	output.ShowText();
+	string text = input.EnterText();
+
+	output.ConfirmOperation();
+	string choose = input.EnterConfirmOperation();
+
+	if( choose != "yes" ) return;
+
+	if( !app.CreateUser(login, password1, age, text) ) {
+		output.ErrorRegister();
+		Pause();
+	}
+}
+
