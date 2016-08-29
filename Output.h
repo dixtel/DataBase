@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <vector>
+#include <unistd.h> // usleep
+#include <cstdlib> // clear
 
 using namespace std;
 
@@ -10,6 +12,7 @@ class Output {
 	public:
 		Output();
 		~Output();
+		void AnimateText(vector <string> text);
 		void Menu();
 		void ShowLoginText();
 		void ShowPasswordText();

@@ -8,6 +8,47 @@ Output::~Output() {
 		cout << "Object Output is deleted\n";
 }
 
+void Output::AnimateText(vector <string> text) {
+	int currentwidth = text[0].size();
+	for (int i=1; i<text.size(); i++) {
+		if(currentwidth >= text[i].size()) continue;
+		currentwidth = text[i].size();
+	}
+
+	const int widthText = currentwidth;
+	const int heightText = text.size();
+
+	char emptyBoardText[heightText][widthText];
+
+	for(int i=0; i<heightText; i++) {
+		for(int y=0; y<widthText; y++) {
+			emptyBoardText[i][y] = ' ';
+		}
+	}
+
+	emptyBoardText[0][0] = text[0][0];
+
+	for(int i = 1; i < widthText + (heightText); i++) {
+		for(int y = 0; y < heightText; y++) {
+			if( (i - y) < 0 ) break;
+			if( (i - y) > widthText) continue;
+			if( text[y].size() < (i - y) ) continue;
+			emptyBoardText[y][i-y] = text[y][i-y];
+		}
+
+		system("clear");
+
+		for(int i=0; i<heightText; i++) {
+			for(int y=0; y<widthText; y++) {
+				cout << emptyBoardText[i][y];
+			}
+			cout << endl;
+		}
+
+		usleep(25 * 1000);
+	}
+}
+
 void Output::Menu() {
 	cout << endl << "--MENU--" << endl
 	<< "1. Login" << endl
@@ -61,15 +102,19 @@ void Output::UserIsRegister() {
 }
 
 void Output::ShowUser( vector <string> user ) {
-	cout << "------------------------------" << endl
-		 << "Username:   " << user[0] << endl
-		 << "Password:   " << user[1] << endl
-		 << "Age:        " << user[2] << endl
-		 << "Text:       " << user[3] << endl
-		 << "------------------------------" << endl
-		 << "1. Edit password" 	<< endl
-		 << "2. Edit age" 		<< endl
-		 << "3. Edit text" 		<< endl
-		 << "4. Delete user" 	<< endl
-		 << "5. Exit" 			<< endl;
+	vector <string> outputText;
+
+	outputText.push_back("------------------------------");
+	outputText.push_back("Username:   " + user[0]);
+	outputText.push_back("Password:   " + user[1]);
+	outputText.push_back("Age:        " + user[2]);
+	outputText.push_back("Text:       " + user[3]);
+	outputText.push_back("------------------------------");
+	outputText.push_back("1. Edit password");
+	outputText.push_back("2. Edit age");
+	outputText.push_back("3. Edit text");
+	outputText.push_back("4. Delete user");
+	outputText.push_back("5. Exit");
+
+	AnimateText(outputText);
 }
