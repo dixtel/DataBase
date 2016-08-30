@@ -12,7 +12,7 @@ class Output {
 	public:
 		Output();
 		~Output();
-		void AnimateText(vector <string> text);
+		void AnimateText(vector <string> text, int miliseconds);
 		void Menu();
 		void ShowLoginText();
 		void ShowPasswordText();
