@@ -13,6 +13,7 @@ class Output {
 		Output();
 		~Output();
 		void AnimateText(vector <string> text, int miliseconds);
+		void Pause();
 		void Menu();
 		void ShowLoginText();
 		void ShowPasswordText();

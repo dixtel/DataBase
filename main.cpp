@@ -12,7 +12,6 @@ App app(fileDirectoryRead, fileDirectorySave);
 Output output;
 Input input;
 
-void Pause();
 void Login();
 void UserMenu();
 void Register();
@@ -21,7 +20,7 @@ void Register();
 int main() {
 	if( app.ErrorOpenFile() ) {
 		output.ErrorOpenFile();
-		Pause();
+		output.Pause();
 		return 0;
 	}
 
@@ -44,12 +43,6 @@ int main() {
 	return 0;
 }
 
-void Pause() {
-	cin.clear();
-	cout << "Press enter to continue...";
-	cin.ignore();
-}
-
 void Login() {
 	output.ShowLoginText();
 	string login = input.EnterLogin();
@@ -59,7 +52,7 @@ void Login() {
 
 	if( !app.CheckUserIsRegister(login, password) ) {
 		output.UserNotFound();
-		Pause();
+		output.Pause();
 		return;
 	}
 
@@ -113,7 +106,7 @@ void Register() {
 
 	if( app.CheckLogin(login) ) {
 		output.UserIsRegister();
-		Pause();
+		output.Pause();
 		return;
 	}
 
@@ -125,7 +118,7 @@ void Register() {
 
 	if(password1 != password2) {
 		output.BadPassword();
-		Pause();
+		output.Pause();
 		return;
 	}
 
@@ -142,7 +135,7 @@ void Register() {
 
 	if( !app.CreateUser(login, password1, age, text) ) {
 		output.ErrorRegister();
-		Pause();
+		output.Pause();
 	}
 }
 

@@ -9,6 +9,7 @@ Output::~Output() {
 }
 
 void Output::AnimateText(vector <string> text, int miliseconds) {
+
 	int maxWidthTextwidth = text[0].size();
 	for (int i = 1; i < text.size(); i++) {
 		if(maxWidthTextwidth >= text[i].size()) continue;
@@ -26,38 +27,43 @@ void Output::AnimateText(vector <string> text, int miliseconds) {
 		}
 	}
 
-	emptyBoardText[0][0] = text[0][0];
-
-	for(int i = 1; i < widthText + (heightText); i++) {
+	for(int i = 0; i < widthText + (heightText); i++) {
 		for(int y = 0; y < heightText; y++) {
 			if( (i - y) < 0 ) break;
-			if( (i - y) > widthText) continue;
+			if( (widthText - 1) < (i - y)) continue;
 			if( text[y].size() < (i - y) ) continue;
 			emptyBoardText[y][i-y] = text[y][i-y];
 		}
 
 		system("clear");
 
-		for(int i=0; i<heightText; i++) {
-			for(int y=0; y<widthText; y++) {
+		for(int i = 0; i < heightText; i++) {
+			for(int y = 0; y < widthText; y++) {
 				cout << emptyBoardText[i][y];
 			}
 			cout << endl;
 		}
-
 		usleep(miliseconds * 1000);
 	}
 }
 
+void Output::Pause() {
+	vector <string> outputText;
+	outputText.push_back("Press enter to continue...");
+	AnimateText(outputText, 20);
+
+	cin.ignore();
+}
+
+
 void Output::Menu() {
 	vector <string> outputText;
 
-	outputText.push_back("------------------------------");
-	outputText.push_back("   MENU  ");
-	outputText.push_back("1. Login");
-	outputText.push_back("2. Register");
-	outputText.push_back("3. Quit");
-	outputText.push_back("------------------------------");
+	outputText.push_back("######################");
+	outputText.push_back("# 1. Login           #");
+	outputText.push_back("# 2. Register        #");
+	outputText.push_back("# 3. Quit            #");
+	outputText.push_back("######################");
 
 	AnimateText(outputText, 25);
 }
@@ -144,5 +150,5 @@ void Output::ShowUser( vector <string> user ) {
 	outputText.push_back("4. Delete user");
 	outputText.push_back("5. Exit");
 
-	AnimateText(outputText, 25);
+	AnimateText(outputText, 20);
 }
